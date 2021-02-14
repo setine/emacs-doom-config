@@ -53,8 +53,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq org-log-done "time"
-            org-log-done-with-time 't)
 (setq lsp-clients-clangd-args '("-j=3"
                                 "--background-index"
                                 "--clang-tidy"
@@ -62,10 +60,15 @@
                                 "--header-insertion=never"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
-(setq org-odt-styles-file "~/.doom.d/org/styles.xml")
-(setq org-odt-content-template-file "~/.doom.d/org/template.xml")
-(defun my-org-odt-export-to-odt (filename)
-  (shell-command (concat "~/.doom.d/org/clean-odt.sh " filename))
-  filename)
-(advice-add 'org-odt-export-to-odt
-            :filter-return #'my-org-odt-export-to-odt)
+;; Org modifications
+(setq org-log-done "time"
+      org-log-done-with-time 't)
+(setq org-odt-styles-file
+      "~/.doom.d/org/styles.xml")
+(setq org-odt-content-template-file
+      "~/.doom.d/org/template.xml")
+(defun uvm-org-odt-remove-bookmark (headline)
+ "Remove ODT bookmarks from input string."
+ (replace-regexp-in-string "<text:bookmark[^>]*>" "" headline))
+(advice-add 'org-odt-headline
+            :filter-return #'uvm-org-odt-remove-bookmark)
