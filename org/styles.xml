@@ -174,7 +174,7 @@
   </style:style>
   <style:style style:name="OrgSubtitle" style:family="paragraph" style:parent-style-name="Subtitle">
    <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm"/>
-   <style:text-properties fo:font-size="20pt"/>
+   <style:text-properties fo:font-size="16pt"/>
   </style:style>
   <style:style style:name="Text_20_body_20_indent" style:display-name="Text body indent" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="text">
    <style:paragraph-properties fo:margin-left="0.499cm" fo:margin-right="0cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
