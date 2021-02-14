@@ -72,3 +72,21 @@
  (replace-regexp-in-string "<text:bookmark[^>]*>" "" headline))
 (advice-add 'org-odt-headline
             :filter-return #'uvm-org-odt-remove-bookmark)
+
+
+;; Semi-center it over the target window, rather than at the cursor position
+;; (which could be anywhere).
+(defadvice! my-emacs-everywhere-set-frame-position (&rest _)
+  :override #'emacs-everywhere-set-frame-position
+  (cl-destructuring-bind (width . height)
+      (alist-get 'outer-size (frame-geometry))
+    (set-frame-position (selected-frame)
+                        (+ emacs-everywhere-window-x
+                           (/ emacs-everywhere-window-width 2)
+                           (- (/ width 2)))
+                        (+ emacs-everywhere-window-y
+                           (/ emacs-everywhere-window-height 2)))))
+
+;; Switch to the new window after splitting
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
