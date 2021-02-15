@@ -60,20 +60,6 @@
                                 "--header-insertion=never"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
-;; Org modifications
-(setq org-log-done "time"
-      org-log-done-with-time 't)
-(setq org-odt-styles-file
-      "~/.doom.d/org/styles.xml")
-(setq org-odt-content-template-file
-      "~/.doom.d/org/template.xml")
-(defun uvm-org-odt-remove-bookmark (headline)
- "Remove ODT bookmarks from input string."
- (replace-regexp-in-string "<text:bookmark[^>]*>" "" headline))
-(advice-add 'org-odt-headline
-            :filter-return #'uvm-org-odt-remove-bookmark)
-
-
 ;; Semi-center it over the target window, rather than at the cursor position
 ;; (which could be anywhere).
 (defadvice! my-emacs-everywhere-set-frame-position (&rest _)
@@ -90,3 +76,15 @@
 ;; Switch to the new window after splitting
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
+
+;; Org modifications
+(after! org
+  (setq org-todo-keywords '((sequence "TODO(t)" "STRT(s)" "|" "DONE(d)"))
+        org-log-done "time" org-log-done-with-time 't
+        org-odt-styles-file "~/.doom.d/org/styles.xml"
+        org-odt-content-template-file "~/.doom.d/org/template.xml")
+  (defun uvm-org-odt-remove-bookmark (headline)
+        "Remove ODT bookmarks from input string."
+        (replace-regexp-in-string "<text:bookmark[^>]*>" "" headline))
+  (advice-add 'org-odt-headline
+            :filter-return #'uvm-org-odt-remove-bookmark))
